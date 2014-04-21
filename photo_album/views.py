@@ -5,9 +5,10 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from cloudinary.forms import cl_init_js_callbacks
+from cloudinary import api # Only required for creating upload presets on the fly
 
 from .models import Photo
-from .forms import PhotoForm, PhotoDirectForm
+from .forms import PhotoForm, PhotoDirectForm, PhotoUnsignedDirectForm
 
 def filter_nones(d):
     return dict((k,v) for k,v in d.iteritems() if v is not None)
@@ -30,11 +31,23 @@ def list(request):
     return render(request, 'list.html', dict(photos=Photo.objects.all(), samples=samples))
 
 def upload(request):
+    unsigned = request.GET.get("unsigned") == "true"
+    
+    if (unsigned):
+        # For the sake of simplicity of the sample site, we generate the preset on the fly. It only needs to be created once, in advance.
+        try:
+            api.upload_preset(PhotoUnsignedDirectForm.upload_preset_name)
+        except api.NotFound:
+            api.create_upload_preset(name=PhotoUnsignedDirectForm.upload_preset_name, unsigned=True, folder="preset_folder")
+            
+    direct_form = PhotoUnsignedDirectForm() if unsigned else PhotoDirectForm()
     context = dict(
         # Form demonstrating backend upload
         backend_form = PhotoForm(),
         # Form demonstrating direct upload
-        direct_form = PhotoDirectForm(),
+        direct_form = direct_form,
+        # Should the upload form be unsigned
+        unsigned = unsigned,
     )
     # When using direct upload - the following call in necessary to update the
     # form's callback url

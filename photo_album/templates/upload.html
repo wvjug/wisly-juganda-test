@@ -38,7 +38,7 @@
   	The cloudinary_direct_upload_field method generates the required HTML and JavaScript to    
     allow uploading directly from the browser to your Cloudinary account -->
   <div id='direct_upload'>
-    <h1>Direct upload from the browser</h1>
+    <h1>Direct {% if unsigned %}unsigned {% endif %}upload from the browser</h1>
 
     <form action="{% url "photo_album.views.direct_upload_complete" %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
@@ -53,6 +53,11 @@
     </div>
     <div class="uploaded_info_holder">
     <a href="{% url "photo_album.views.list" %}" class="back_link">Back to list...</a>
+    {% if unsigned %}
+      <a href="?unsigned=false">Switch to signed upload</a>
+    {% else %}
+      <a href="?unsigned=true">Switch to unsigned upload</a>
+    {% endif %}
   </div>
 {% endblock %}
 {% block javascript %}
