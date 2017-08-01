@@ -13,7 +13,7 @@ class Photo(models.Model):
     ## Points to a Cloudinary image
     image = CloudinaryField('image')
 
-    """ Informative name for mode """
+    """ Informative name for model """
     def __unicode__(self):
         try:
             public_id = self.image.public_id
