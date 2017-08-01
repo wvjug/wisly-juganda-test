@@ -63,7 +63,6 @@ def upload(request):
 
     return render(request, 'upload.html', context)
 
-@csrf_exempt
 def direct_upload_complete(request):
     form = PhotoDirectForm(request.POST)
     if form.is_valid():
