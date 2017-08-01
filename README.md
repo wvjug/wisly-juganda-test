@@ -16,7 +16,7 @@ Project cloning and dependent package installation:
     pip install -r requirements.txt
 
 Defining Cloudinary's credentials. The CLOUDINARY_URL value is available in the [dashboard of your Cloudinary account](https://cloudinary.com/console). 
-If you don't have a Cloudinary account yet, [click here](https://cloudinary.com/users/register/free) to creare your free acount.
+If you don't have a Cloudinary account yet, [click here](https://cloudinary.com/users/register/free) to create your free account.
      
     export CLOUDINARY_URL=cloudinary://<API-KEY>:<API-SECRET>@<CLOUD-NAME>
     
