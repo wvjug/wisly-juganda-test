@@ -49,7 +49,7 @@ def upload(request):
         # Should the upload form be unsigned
         unsigned = unsigned,
     )
-    # When using direct upload - the following call in necessary to update the
+    # When using direct upload - the following call is necessary to update the
     # form's callback url
     cl_init_js_callbacks(context['direct_form'], request)
 
