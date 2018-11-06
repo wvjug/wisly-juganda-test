@@ -22,7 +22,7 @@ If you don't have a Cloudinary account yet, [click here](https://cloudinary.com/
     
 Creating a local database and running a web server:
       
-    python ./manage.py syncdb
+    python ./manage.py migrate --run-syncdb
     python ./manage.py runserver
 
 You can now browse to the [following link](http://localhost:8000/) to start exploring the sample.
