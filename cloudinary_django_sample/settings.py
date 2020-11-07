@@ -1,10 +1,12 @@
 # Django settings for cloudinary_django_sample project.
+import cloudinary
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Wisly Juganda', 'wv.juganda@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -137,6 +139,7 @@ INSTALLED_APPS = (
     'photo_album',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'hashlib',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -167,3 +170,9 @@ LOGGING = {
         },
     }
 }
+
+cloudinary.config( 
+  cloud_name = "dupjfiurr", 
+  api_key = "235235469326924", 
+  api_secret = "q1DL3jmnW7QGCoMLQFbYRKnAQ1k" 
+)
