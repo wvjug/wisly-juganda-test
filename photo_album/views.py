@@ -3,8 +3,9 @@ import json
 import six
 from cloudinary import api  # Only required for creating upload presets on the fly
 from cloudinary.forms import cl_init_js_callbacks
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from .forms import PhotoForm, PhotoDirectForm, PhotoUnsignedDirectForm
 from .models import Photo
@@ -78,3 +79,10 @@ def direct_upload_complete(request):
         ret = dict(errors=form.errors)
 
     return HttpResponse(json.dumps(ret), content_type='application/json')
+
+# Bonus: Add a button to delete the image on the gallery list
+def delete(request, pk):
+    if request.method == 'POST':
+        image = Photo.objects.get(pk=pk)
+        image.delete()
+    return redirect('/list')

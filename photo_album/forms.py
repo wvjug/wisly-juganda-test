@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from cloudinary.forms import CloudinaryJsFileField, CloudinaryUnsignedJsFileField
+from cloudinary.forms import CloudinaryJsFileField, CloudinaryUnsignedJsFileField, CloudinaryFileField
 # Next two lines are only used for generating the upload preset sample name
 from cloudinary.compat import to_bytes
 import cloudinary, hashlib
@@ -11,6 +11,12 @@ class PhotoForm(ModelForm):
     class Meta:
         model = Photo
         fields = '__all__'
+    # Modify the sample project’s image upload form to: 
+    image = CloudinaryFileField(options = { 
+        'crop': 'limit', 'width': 500, 'height': 500, # a. Automatically limit image size to 500x500 pixels on upload 
+        'tags': "directly_uploaded" # b. Tag uploaded images (doesn’t matter which tag)
+        })
+
 
 class PhotoDirectForm(PhotoForm):
     image = CloudinaryJsFileField()
