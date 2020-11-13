@@ -28,6 +28,13 @@ def list(request):
         dict(format="png", angle=20, height=None, width=None, transformation=[
             dict(crop="fill", gravity="north", width=150, height=150, effect="sepia"),
         ]),
+        #Modify the sample project’s gallery to display 2 additional thumbnails per image:
+        #a. One with the Cloudinary logo as an overlay (watermark)
+        dict(height=150, width=150, effect="screen",
+        overlay={'url': "https://res.cloudinary.com/demo/image/upload/logos/cloudinary_icon_blue.png"},
+        crop="fit"),
+        #b. Second with the image saturation increased to 50%
+        dict(crop="fill", effect="saturation:50"),
     ]
     samples = [filter_nones(dict(defaults, **sample)) for sample in samples]
     return render(request, 'list.html', dict(photos=Photo.objects.all(), samples=samples))

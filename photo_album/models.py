@@ -1,5 +1,6 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
+from cloudinary.api import delete_resources
 
 """
 This is the main model in the project. It holds a reference to cloudinary-stored
@@ -20,3 +21,8 @@ class Photo(models.Model):
         except AttributeError:
             public_id = ''
         return "Photo <%s:%s>" % (self.title, public_id)
+
+    # Bonus: Add a button to delete the image on the gallery list
+    def delete(self, *args, **kwargs):
+        delete_resources(self.image.public_id)
+        super().delete(*args, **kwargs)
